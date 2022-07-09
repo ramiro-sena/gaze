@@ -19,6 +19,7 @@ async def predict(file: UploadFile = File(...)):
     contents = await file.read()
     nparr = np.fromstring(contents, np.uint8)
     img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+    img = cv2.imread('./test_images/1.jpg')
     data, image = landmark.predict(img)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     
@@ -27,6 +28,8 @@ async def predict(file: UploadFile = File(...)):
     #encoded_img = base64.b64encode(encoded_img)
     headers = (data)
     res = StreamingResponse(io.BytesIO(encoded_img.tobytes()), media_type="image/png")
-    return res
+    return JSONResponse(data)
+
+
 
 

@@ -10,7 +10,7 @@ def predict(image):
     haarcascade = "haarcascade_frontalface_alt2.xml"
     detector = cv2.CascadeClassifier(haarcascade)
     faces = detector.detectMultiScale(image_gray)
-    
+
     for face in faces:
         (x, y, w, d) = face
         cv2.rectangle(image, (x, y), (x+w, y+d), (255, 255, 255), 2)
@@ -23,7 +23,7 @@ def predict(image):
     for landmark in landmarks:
         i = 0
         for x, y in landmark[0]:
-            #cv2.putText(image, f'{i}', (int(x), int(y)),
+            # cv2.putText(image, f'{i}', (int(x), int(y)),
             #            cv2.FONT_HERSHEY_PLAIN, 1, (0, 0, 255), 1)
             cv2.circle(image, (int(x), int(y)), 1, (255, 255, 255), 1)
             i += 1
@@ -35,7 +35,7 @@ def predict(image):
     print(f'Left midpoint{l_midpoint}')
     for x, y in [l_midpoint, r_midpoint]:
         cv2.circle(image, (int(x), int(y)),  int(l_distance/2), (255, 0, 0), 1)
-    
+
     # ROI
     # Gaze detection
     left_eye_region = np.array([(int(landmarks[0][0][36][0]), int(landmarks[0][0][36][1])),
@@ -86,19 +86,56 @@ def predict(image):
     # cv2.imshow('',image)
     # cv2.waitKey(0)
     '''
-    
+    lx, ly, rx, ry = l_midpoint[0], l_midpoint[1],r_midpoint[0], r_midpoint[1]
+
     data = {
         'left': {
-            'x': l_midpoint[0],
-            'y': l_midpoint[1],
-            'r': l_distance/2
+            'gaze': {
+                'x': lx,
+                'y': ly,
+                'radius': l_distance/2
+            },
+            'l': {
+                'x': lx - 2.5 * l_distance,
+                'y': ly
+            },
+            'r':{
+                'x': lx + 1.5 * l_distance,
+                'y': ly
+            },
+            't':{
+                'x': lx,
+                'y': ly - l_distance
+            },
+            'b': {
+                'x': lx, 
+                'y': ly + 2.5 * l_distance
+            }
         },
         'right': {
-            'x': r_midpoint[0],
-            'y': r_midpoint[1],
-            'r': r_distance/2
+            'gaze': {
+                'x': rx,
+                'y': ry,
+                'radius': r_distance/2
+            },
+            'l': {
+                'x': rx - 1.5 * r_distance,
+                'y': ry
+            },
+            'r':{
+                'x': rx + 2.5 * r_distance,
+                'y': ry
+            },
+            't':{
+                'x': rx,
+                'y': ry - r_distance
+            },
+            'b': {
+                'x': rx, 
+                'y': ry + 2.5 * r_distance
+            }
         }
     }
-    
+
     return(data, image)
-#print(predict('./test_images/2.png'))
+# print(predict('./test_images/2.png'))
