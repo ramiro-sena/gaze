@@ -1,4 +1,4 @@
-from urllib.parse import MAX_CACHE_SIZE
+
 from fastapi import FastAPI, UploadFile, File
 from starlette.responses import StreamingResponse
 from fastapi.responses import JSONResponse
@@ -16,7 +16,9 @@ origins = [
     "http://localhost:",
     "http://127.0.0.1:3000",
     "http://127.0.0.1",
-    "https://canvas-m7zwpwuti-ramiro-sena.vercel.app"
+    "https://canvas-m7zwpwuti-ramiro-sena.vercel.app",
+    "http://127.0.0.1:8000",
+    "http://127.0.0.1"
 ]
 
 app.add_middleware(
@@ -40,7 +42,6 @@ async def predict(file: UploadFile = File(...)):
     contents = await file.read()
     nparr = np.fromstring(contents, np.uint8)
     img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-    img = cv2.imread('./test_images/1.jpg')
     data, image = landmark.predict(img)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     
