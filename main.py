@@ -12,13 +12,7 @@ import landmark
 
 app = FastAPI()
 origins = [
-    "http://localhost:3000",
-    "http://localhost:",
-    "http://127.0.0.1:3000",
-    "http://127.0.0.1",
-    "https://canvas-m7zwpwuti-ramiro-sena.vercel.app",
-    "http://127.0.0.1:8000",
-    "http://127.0.0.1"
+    "*"
 ]
 
 app.add_middleware(
