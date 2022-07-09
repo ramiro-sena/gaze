@@ -1,6 +1,9 @@
+from urllib.parse import MAX_CACHE_SIZE
 from fastapi import FastAPI, UploadFile, File
 from starlette.responses import StreamingResponse
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
+
 import numpy as np
 import cv2
 import io
@@ -8,9 +11,27 @@ import base64
 import landmark
 
 app = FastAPI()
+origins = [
+    "http://localhost:3000",
+    "http://localhost:",
+    "http://127.0.0.1:3000",
+    "http://127.0.0.1",
+    "https://canvas-m7zwpwuti-ramiro-sena.vercel.app"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_methods=["POST", "GET"],
+    allow_headers=['*'],
+    max_age=3600
+)
+
+
+
 
 @app.get("/")
-def hello():
+async def hello():
     return {"message": "Server is up and running!"}
 
 
@@ -29,7 +50,6 @@ async def predict(file: UploadFile = File(...)):
     headers = (data)
     res = StreamingResponse(io.BytesIO(encoded_img.tobytes()), media_type="image/png")
     return JSONResponse(data)
-
 
 
 
