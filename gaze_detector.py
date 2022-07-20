@@ -33,8 +33,8 @@ def url(filename: str):
 def detect(frame: np.ndarray):
     mp_face_mesh = mp.solutions.face_mesh
 
-    LEFT_IRIS = range(474, 478)
-    RIGHT_IRIS = range(469, 473)
+    RIGHT_IRIS = range(474, 478)
+    LEFT_IRIS = range(469, 473)
 
     with mp_face_mesh.FaceMesh(
         static_image_mode=True,
@@ -93,7 +93,7 @@ def detect(frame: np.ndarray):
                     },
                     't':{
                         'x': l_cx,
-                        'y': l_cy - l_radius
+                        'y': l_cy - 2 * l_radius
                     },
                     'b': {
                         'x': l_cx, 
