@@ -64,63 +64,55 @@ def detect(frame: np.ndarray):
             [l_cx, l_cy] = map(lambda x: int(x), [l_cx, l_cy])
             [r_cx, r_cy] = map(lambda x: int(x), [r_cx, r_cy])
 
-            mean_diameter_of_irises = np.mean(
-                [l_radius, r_radius]) * 2  # in pixels
-            MEAN_HUMAN_IRISES = 11.7  # in milimeters
-
-            pixels_to_milimeters_ratio = MEAN_HUMAN_IRISES / mean_diameter_of_irises
-
-            distance_between_irises = np.sqrt(
-                np.power(l_cx - r_cx, 2) + np.power(l_cy - r_cy, 2)
-            )  # in pixels
-
-            pupillary_distance = distance_between_irises * pixels_to_milimeters_ratio
+            radius = np.mean(
+                [l_radius, r_radius]) 
+            
 
             data = {
                 'left': {
                     'gaze': {
                         'x': l_cx,
                         'y': l_cy,
-                        'radius': l_radius
+                        'radius': radius
                     },
                     'l': {
-                        'x': l_cx - 5 * l_radius,
+                        'x': l_cx - 5 * radius,
                         'y': l_cy
                     },
                     'r':{
-                        'x': l_cx + 3 * l_radius,
+                        'x': l_cx + 3 * radius,
                         'y': l_cy
                     },
                     't':{
                         'x': l_cx,
-                        'y': l_cy - 2 * l_radius
+                        'y': l_cy - 2 * radius
                     },
                     'b': {
                         'x': l_cx, 
-                        'y': l_cy + 5 * l_radius
+                        'y': l_cy + 5 * radius
                     }
                 },
                 'right': {
                     'gaze': {
                         'x': r_cx,
                         'y': r_cy,
-                        'radius': r_radius
+                        'radius': radius
                     },
                     'l': {
-                        'x': r_cx - 3 * r_radius,
+                        'x': r_cx - 3 * radius,
                         'y': r_cy
                     },
                     'r':{
-                        'x': r_cx + 5 * r_radius,
+                        'x': r_cx + 5 * radius,
                         'y': r_cy
                     },
                     't':{
                         'x': r_cx,
-                        'y': r_cy - 2 * r_radius
+                        'y': r_cy - 2 * radius
                     },
                     'b': {
                         'x': r_cx, 
-                        'y': r_cy + 5 * r_radius
+                        'y': r_cy + 5 * radius
                     }
                 }
             }
