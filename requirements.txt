@@ -1,6 +1,8 @@
 numpy==1.23.1
-opencv-contrib-python-headless==4.6.0.66
+opencv-python-headless==4.6.0.66
 fastapi==0.78.0
 uvicorn==0.18.2
 python-multipart==0.0.5
 aiofiles==0.8.0
+mediapipe
+scikit-image

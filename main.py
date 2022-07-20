@@ -8,7 +8,7 @@ import numpy as np
 import cv2
 import io
 import base64
-import landmark
+import gaze_detector
 
 app = FastAPI()
 origins = [
@@ -36,7 +36,7 @@ async def predict(file: UploadFile = File(...)):
     contents = await file.read()
     nparr = np.fromstring(contents, np.uint8)
     img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-    data, image = landmark.predict(img)
+    data, image = gaze_detector.detect(img)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     
     # line that fixed it
