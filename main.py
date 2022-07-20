@@ -24,8 +24,6 @@ app.add_middleware(
 )
 
 
-
-
 @app.get("/")
 async def hello():
     return {"message": "Server is up and running!"}
