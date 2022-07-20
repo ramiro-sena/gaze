@@ -116,7 +116,7 @@ def detect(frame: np.ndarray):
                     },
                     't':{
                         'x': r_cx,
-                        'y': r_cy - r_radius
+                        'y': r_cy - 2 * r_radius
                     },
                     'b': {
                         'x': r_cx, 
