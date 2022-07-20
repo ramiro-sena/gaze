@@ -4,5 +4,5 @@ fastapi==0.78.0
 uvicorn==0.18.2
 python-multipart==0.0.5
 aiofiles==0.8.0
-mediapipe
-scikit-image
+mediapipe==0.8.10.1
+scikit-image==0.19.3
