@@ -123,9 +123,7 @@ def detect(frame: np.ndarray):
                         'y': r_cy + 5 * radius
                     }
                 },
-                'estimated-dp': pupillary_distance,
-                'estimated-ratio' : pixels_to_milimeters_ratio,
-                'bridge': np.mean([l_cx, l_cy])
+
             }
 
             return(data, frame)
