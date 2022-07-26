@@ -67,6 +67,14 @@ def detect(frame: np.ndarray):
             radius = np.mean(
                 [l_radius, r_radius]) 
             
+            MEAN_HUMAN_IRISES = 11.7  # in milimeters
+            distance_between_irises = np.sqrt(
+                np.power(l_cx - r_cx, 2) + np.power(l_cy - r_cy, 2)
+            )  # in pixels
+            pixels_to_milimeters_ratio = MEAN_HUMAN_IRISES / (radius*2)
+            pupillary_distance = distance_between_irises * pixels_to_milimeters_ratio
+
+
 
             data = {
                 'left': {
@@ -114,7 +122,9 @@ def detect(frame: np.ndarray):
                         'x': r_cx, 
                         'y': r_cy + 5 * radius
                     }
-                }
+                },
+                'estimated-dp': pupillary_distance,
+                'estimated-ratio' : pixels_to_milimeters_ratio
             }
 
             return(data, frame)
