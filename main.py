@@ -9,6 +9,7 @@ import cv2
 import io
 import base64
 import gaze_detector
+import gaze_detector2
 
 app = FastAPI()
 origins = [
@@ -50,7 +51,7 @@ async def predict(file: UploadFile = File(...)):
     contents = await file.read()
     nparr = np.fromstring(contents, np.uint8)
     img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-    data, image = gaze_detector.detect(img)
+    data, image = gaze_detector2.detect(img)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     
     # line that fixed it
