@@ -65,16 +65,14 @@ def detect(frame: np.ndarray):
             [r_cx, r_cy] = map(lambda x: int(x), [r_cx, r_cy])
 
             radius = np.mean(
-                [l_radius, r_radius]) 
-            
+                [l_radius, r_radius])
+
             MEAN_HUMAN_IRISES = 11.7  # in milimeters
             distance_between_irises = np.sqrt(
                 np.power(l_cx - r_cx, 2) + np.power(l_cy - r_cy, 2)
             )  # in pixels
             pixels_to_milimeters_ratio = MEAN_HUMAN_IRISES / (radius*2)
             pupillary_distance = distance_between_irises * pixels_to_milimeters_ratio
-
-
 
             data = {
                 'left': {
@@ -87,16 +85,16 @@ def detect(frame: np.ndarray):
                         'x': l_cx - 5 * radius,
                         'y': l_cy
                     },
-                    'r':{
+                    'r': {
                         'x': l_cx + 3 * radius,
                         'y': l_cy
                     },
-                    't':{
+                    't': {
                         'x': l_cx,
                         'y': l_cy - 2 * radius
                     },
                     'b': {
-                        'x': l_cx, 
+                        'x': l_cx,
                         'y': l_cy + 5 * radius
                     }
                 },
@@ -110,22 +108,25 @@ def detect(frame: np.ndarray):
                         'x': r_cx - 3 * radius,
                         'y': r_cy
                     },
-                    'r':{
+                    'r': {
                         'x': r_cx + 5 * radius,
                         'y': r_cy
                     },
-                    't':{
+                    't': {
                         'x': r_cx,
                         'y': r_cy - 2 * radius
                     },
                     'b': {
-                        'x': r_cx, 
+                        'x': r_cx,
                         'y': r_cy + 5 * radius
                     }
                 },
-                'est':{
+                'est': {
                     'ratio': pixels_to_milimeters_ratio,
-                    'bridge' : np.mean([l_cx, r_cx])
+                    'bridge': {
+                        'x': np.mean([l_cx, r_cx]),
+                        'y': np.mean([l_cy, r_cy])
+                    }
                 }
 
             }
@@ -133,7 +134,3 @@ def detect(frame: np.ndarray):
             return(data, frame)
 
         return {"face-not-found"}
-
-
-
-
