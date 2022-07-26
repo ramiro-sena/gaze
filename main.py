@@ -45,4 +45,19 @@ async def predict(file: UploadFile = File(...)):
     return JSONResponse(data)
 
 
+@app.post("/predict-file-est")
+async def predict(file: UploadFile = File(...)):
+    contents = await file.read()
+    nparr = np.fromstring(contents, np.uint8)
+    img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+    data, image = gaze_detector.detect(img)
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    
+    # line that fixed it
+    _, encoded_img = cv2.imencode('.PNG', image)
+    #encoded_img = base64.b64encode(encoded_img)
+    headers = (data)
+    res = StreamingResponse(io.BytesIO(encoded_img.tobytes()), media_type="image/png")
+    return JSONResponse(data)
+
 
