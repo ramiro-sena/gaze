@@ -125,7 +125,7 @@ def detect(frame: np.ndarray):
                 },
                 'est':{
                     'ratio': pixels_to_milimeters_ratio,
-                    'bridge' : np.mean([l_cx, l_cy])
+                    'bridge' : np.mean([l_cx, r_cx])
                 }
 
             }
