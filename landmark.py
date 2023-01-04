@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-import app.utils
+import utils
 
 
 def predict(image):
