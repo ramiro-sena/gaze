@@ -8,7 +8,7 @@ import numpy as np
 import cv2
 import io
 import base64
-import landmark
+import app.landmark
 
 app = FastAPI()
 origins = [
